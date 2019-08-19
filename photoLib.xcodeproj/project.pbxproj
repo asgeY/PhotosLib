@@ -12,6 +12,7 @@
 		347C11852309CC8F0025D507 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 347C11832309CC8F0025D507 /* Main.storyboard */; };
 		347C11872309CC910025D507 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 347C11862309CC910025D507 /* Assets.xcassets */; };
 		347C118A2309CC910025D507 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 347C11882309CC910025D507 /* LaunchScreen.storyboard */; };
+		347C1194230AA04C0025D507 /* MainTapBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 347C1193230AA04C0025D507 /* MainTapBarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		347C11862309CC910025D507 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		347C11892309CC910025D507 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		347C118B2309CC910025D507 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		347C1193230AA04C0025D507 /* MainTapBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTapBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			children = (
 				347C117F2309CC8F0025D507 /* AppDelegate.swift */,
 				347C11812309CC8F0025D507 /* ViewController.swift */,
+				347C1193230AA04C0025D507 /* MainTapBarController.swift */,
 				347C11832309CC8F0025D507 /* Main.storyboard */,
 				347C11862309CC910025D507 /* Assets.xcassets */,
 				347C11882309CC910025D507 /* LaunchScreen.storyboard */,
@@ -137,6 +140,7 @@
 			files = (
 				347C11822309CC8F0025D507 /* ViewController.swift in Sources */,
 				347C11802309CC8F0025D507 /* AppDelegate.swift in Sources */,
+				347C1194230AA04C0025D507 /* MainTapBarController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
