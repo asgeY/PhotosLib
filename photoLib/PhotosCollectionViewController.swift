@@ -10,6 +10,8 @@ import UIKit
 
 class PhotosCollectionViewController: UICollectionViewController {
 
+    
+
     var networkDataFetcher = NetworkDataFetcher()
     private var timer: Timer?
 

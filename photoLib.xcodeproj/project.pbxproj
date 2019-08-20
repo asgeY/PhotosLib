@@ -17,6 +17,7 @@
 		347C1198230AD6110025D507 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 347C1197230AD6110025D507 /* NetworkService.swift */; };
 		34E82A6D230C02F200C9DD2F /* NetworkDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E82A6C230C02F200C9DD2F /* NetworkDataFetcher.swift */; };
 		34E82A6F230C03AA00C9DD2F /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E82A6E230C03AA00C9DD2F /* SearchResults.swift */; };
+		34E82A72230C0EE800C9DD2F /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E82A71230C0EE800C9DD2F /* PhotoCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		347C1197230AD6110025D507 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		34E82A6C230C02F200C9DD2F /* NetworkDataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDataFetcher.swift; sourceTree = "<group>"; };
 		34E82A6E230C03AA00C9DD2F /* SearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResults.swift; sourceTree = "<group>"; };
+		34E82A71230C0EE800C9DD2F /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 				34E82A6B230BFD5100C9DD2F /* Service */,
 				347C1193230AA04C0025D507 /* MainTapBarController.swift */,
 				347C1195230AA30D0025D507 /* PhotosCollectionViewController.swift */,
+				34E82A71230C0EE800C9DD2F /* PhotoCell.swift */,
 				347C11832309CC8F0025D507 /* Main.storyboard */,
 				347C11862309CC910025D507 /* Assets.xcassets */,
 				347C11882309CC910025D507 /* LaunchScreen.storyboard */,
@@ -170,6 +173,7 @@
 				347C1198230AD6110025D507 /* NetworkService.swift in Sources */,
 				347C11822309CC8F0025D507 /* ViewController.swift in Sources */,
 				347C11802309CC8F0025D507 /* AppDelegate.swift in Sources */,
+				34E82A72230C0EE800C9DD2F /* PhotoCell.swift in Sources */,
 				34E82A6F230C03AA00C9DD2F /* SearchResults.swift in Sources */,
 				347C1194230AA04C0025D507 /* MainTapBarController.swift in Sources */,
 				347C1196230AA30D0025D507 /* PhotosCollectionViewController.swift in Sources */,
