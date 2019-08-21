@@ -152,6 +152,7 @@ extension PhotosCollectionViewController: UISearchBarDelegate {
 
         print(searchText)
 
+        timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (_) in
             self.networkDataFetcher.fetchImages(searchTerm: searchText) { [weak self] (searchResults) in
                 guard let fetchedPhotos = searchResults else {return}
