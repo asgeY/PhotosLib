@@ -20,12 +20,6 @@ class PhotosCell: UICollectionViewCell {
         return imageView
     }()
 
-    override var isSelected: Bool {
-        didSet {
-            updateSelectedState()
-        }
-    }
-
     private let photoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -33,6 +27,19 @@ class PhotosCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
+
+    var unsplashPhoto: UnsplashPhoto! {
+        didSet {
+            let photoUrl = unsplashPhoto.urls["regular"]
+
+        }
+    }
+
+    override var isSelected: Bool {
+        didSet {
+            updateSelectedState()
+        }
+    }
 
     override func prepareForReuse() {
         super.prepareForReuse()
