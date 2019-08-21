@@ -15,6 +15,11 @@ class PhotosCollectionViewController: UICollectionViewController {
 
     private var photos = [UnsplashPhoto]()
 
+    private var selectedImages = [UIImage]()
+
+    private let itemPerRow: CGFloat = 2
+    private let sectionInserts = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+
     private lazy var addBarButtonItem: UIBarButtonItem = {
         return UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addBarButtonTapped))
     }()
@@ -28,7 +33,7 @@ class PhotosCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        collectionView.backgroundColor = .orange
+        collectionView.backgroundColor = .white
 
         setUpCollectionView()
         setUpNavigationBar()
@@ -41,14 +46,24 @@ class PhotosCollectionViewController: UICollectionViewController {
         print(#function)
     }
 
-    @objc private func actionBarButtonTapped() {
-        print(#function)
-    }
+    @objc private func actionBarButtonTapped(sender: UIBarButtonItem) {
+        let shareController = UIActivityViewController(activityItems: selectedImages, applicationActivities: nil)
+        shareController.completionWithItemsHandler = { _, bool, _, _ in
+            if bool {
+
+            }
+        }
+            shareController.popoverPresentationController?.barButtonItem = sender
+            shareController.popoverPresentationController?.permittedArrowDirections = .any
+            present(shareController, animated: true, completion: nil)
+        }
+
 
 // MARK: - Setup UI Elements
 
     private func setUpCollectionView() {
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "CellId")
+        collectionView.register(PhotosCell.self, forCellWithReuseIdentifier: PhotosCell.reuseId)
     }
 
     private func setUpNavigationBar() {
@@ -78,14 +93,32 @@ class PhotosCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photos.count
+        collectionView.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        collectionView.contentInsetAdjustmentBehavior = .automatic
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellId", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosCell.reuseId, for: indexPath) as! PhotosCell
         let unsplasedPhoto = photos[indexPath.item]
-        cell
-        cell.backgroundColor = .black
+        cell.unsplashPhoto = unsplasedPhoto
+
         return cell
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! PhotosCell
+        guard let image = cell.photoImageView.image else {return}
+        selectedImages.append(image)
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! PhotosCell
+        guard let image = cell.photoImageView.image else {return}
+        if let index = selectedImages.firstIndex(of: image) {
+            selectedImages.remove(at: index)
+        }
+
+
     }
 }
 
@@ -103,7 +136,31 @@ extension PhotosCollectionViewController: UISearchBarDelegate {
             self.networkDataFetcher.fetchImages(searchTerm: searchText) { [weak self] (searchResults) in
                 guard let fetchedPhotos = searchResults else {return}
                 self?.photos = fetchedPhotos.results
+                self?.collectionView.reloadData()
             }
         })
     }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension PhotosCollectionViewController: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let photo = photos[indexPath.item]
+        let paddingSpace = sectionInserts.left * (itemPerRow + 1)
+        let availableWidth = view.frame.width - paddingSpace
+        let widthPerItem = availableWidth / itemPerRow
+        let height = CGFloat(photo.height) * widthPerItem / CGFloat(photo.width)
+        return CGSize(width: widthPerItem, height: height)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return sectionInserts
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return sectionInserts.left
+    }
+
 }

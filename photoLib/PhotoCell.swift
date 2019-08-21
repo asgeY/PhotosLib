@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class PhotosCell: UICollectionViewCell {
 
@@ -20,7 +21,7 @@ class PhotosCell: UICollectionViewCell {
         return imageView
     }()
 
-    private let photoImageView: UIImageView = {
+    let photoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
@@ -31,7 +32,8 @@ class PhotosCell: UICollectionViewCell {
     var unsplashPhoto: UnsplashPhoto! {
         didSet {
             let photoUrl = unsplashPhoto.urls["regular"]
-
+            guard let imageUrl = photoUrl, let url = URL(string: imageUrl) else {return}
+            photoImageView.sd_setImage(with: url, completed: nil)
         }
     }
 
