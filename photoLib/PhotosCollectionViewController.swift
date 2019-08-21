@@ -29,12 +29,17 @@ class PhotosCollectionViewController: UICollectionViewController {
 
     }()
 
+    private var numberOfSelectedPhotos: Int {
+        return collectionView.indexPathsForSelectedItems?.count ?? 0
+    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         collectionView.backgroundColor = .white
 
+        updateNavigationButtonStated()
         setUpCollectionView()
         setUpNavigationBar()
         setUpSearchBar()
@@ -50,7 +55,7 @@ class PhotosCollectionViewController: UICollectionViewController {
         let shareController = UIActivityViewController(activityItems: selectedImages, applicationActivities: nil)
         shareController.completionWithItemsHandler = { _, bool, _, _ in
             if bool {
-
+                self.refresh()
             }
         }
             shareController.popoverPresentationController?.barButtonItem = sender
@@ -58,12 +63,27 @@ class PhotosCollectionViewController: UICollectionViewController {
             present(shareController, animated: true, completion: nil)
         }
 
+    private func updateNavigationButtonStated() {
+        addBarButtonItem.isEnabled = numberOfSelectedPhotos > 0
+        actionBarButtonItem.isEnabled = numberOfSelectedPhotos > 0
+    }
+
+    func refresh() {
+        self.selectedImages.removeAll()
+        self.collectionView.selectItem(at: nil, animated: true, scrollPosition: [])
+        updateNavigationButtonStated()
+    }
+
 
 // MARK: - Setup UI Elements
 
     private func setUpCollectionView() {
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "CellId")
         collectionView.register(PhotosCell.self, forCellWithReuseIdentifier: PhotosCell.reuseId)
+
+        collectionView.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        collectionView.contentInsetAdjustmentBehavior = .automatic
+        collectionView.allowsMultipleSelection = true
     }
 
     private func setUpNavigationBar() {
@@ -92,9 +112,9 @@ class PhotosCollectionViewController: UICollectionViewController {
     // MARK: - UICollectionViewDataSourse, UICollectionViewDelegate
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos.count
         collectionView.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         collectionView.contentInsetAdjustmentBehavior = .automatic
+        return photos.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -106,19 +126,19 @@ class PhotosCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        updateNavigationButtonStated()
         let cell = collectionView.cellForItem(at: indexPath) as! PhotosCell
         guard let image = cell.photoImageView.image else {return}
         selectedImages.append(image)
     }
 
     override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        updateNavigationButtonStated()
         let cell = collectionView.cellForItem(at: indexPath) as! PhotosCell
         guard let image = cell.photoImageView.image else {return}
         if let index = selectedImages.firstIndex(of: image) {
             selectedImages.remove(at: index)
         }
-
-
     }
 }
 
@@ -137,6 +157,7 @@ extension PhotosCollectionViewController: UISearchBarDelegate {
                 guard let fetchedPhotos = searchResults else {return}
                 self?.photos = fetchedPhotos.results
                 self?.collectionView.reloadData()
+                self?.refresh()
             }
         })
     }
